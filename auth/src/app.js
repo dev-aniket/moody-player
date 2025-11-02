@@ -5,8 +5,14 @@ import authRoute from '../src/routes/user.route.js';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import config from './confg/config.js';
+import cors from 'cors';
 
 const app = express();
+
+app.use(cors({
+  origin:"http://localhost:3000",
+  credentials:true
+}))
 
 app.use(express.json());
 app.use(cookieParser());

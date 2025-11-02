@@ -6,6 +6,7 @@ import passport from 'passport';
 const router = express.Router();
 
 router.post("/register", validationRules.registerUserValidationRules, authController.register);
+router.post("/login", validationRules.loginUserValidationRules, authController.login);
 
 router.get('/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })
