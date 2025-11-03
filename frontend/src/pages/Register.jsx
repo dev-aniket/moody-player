@@ -149,9 +149,9 @@ export default function Register() {
                             onChange={handleChange}
                             required
                             placeholder="••••••••"
-                            minLength={8}
+                            minLength={5}
                         />
-                        <p className="hint text-muted">Minimum 8 characters.</p>
+                        <p className="hint text-muted">Minimum 5 characters.</p>
                     </div>
 
                     <button type="submit" className="btn btn-primary" aria-label="Create account">
