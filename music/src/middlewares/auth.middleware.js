@@ -2,29 +2,44 @@ import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
 
 
-export async function artistMiddleware(req, res, next){
+export async function authArtistMiddleware(req, res, next) {
+
     const token = req.cookies.token;
 
-    if(!token){
-        return res.status(400).json({
-            message: "Unauthorized Access"
-        })
-    };
+    if (!token) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
 
-    try{
+
+    try {
         const decoded = jwt.verify(token, config.JWT_SECRET);
-            if(decoded.role !== 'artist'){
-                return res.status(400).json({
-                message: "Forbidden "
-            })
-        } 
+        if (decoded.role !== 'artist') {
+            return res.status(403).json({ message: 'Forbidden' });
+        }
         req.user = decoded;
         next();
+    } catch (err) {
+        console.log(err)
+        return res.status(401).json({ message: 'Unauthorized' });
     }
-    catch(err){
-        console.log(err);
-        return res.status(400).json({
-            message: "Unauthorized Access"
-        })
+
+}
+
+export async function authUserMiddleware(req, res, next) {
+
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.status(401).json({ message: 'Unauthorized' });
     }
+
+    try {
+        const decoded = jwt.verify(token, config.JWT_SECRET);
+        req.user = decoded;
+        next();
+    } catch (err) {
+        console.log(err)
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+
 }

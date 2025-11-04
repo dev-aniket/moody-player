@@ -1,5 +1,6 @@
 import { uploadFile, getPresignedUrl } from "../services/storage.services.js";
 import musicModel from "../models/music.model.js";
+import playlistModel from "../models/playlist.model.js";
 
 export async function uploadMusic(req, res) {
 
@@ -26,24 +27,54 @@ export async function uploadMusic(req, res) {
         console.log(err)
         return res.status(500).json({ message: 'Internal server error' });
     }
-
 }
 
-export async function getArtistMusic(req, res){
-    try{
-        const musicDocs = await musicModel.find({artistId: req.user.id}).lean();
+export async function getArtistMusics(req, res) {
+    try {
+        const musicsDocs = await musicModel.find({ artistId: req.user.id }).lean();
 
         const musics = [];
 
-        for(let music of musicDocs){
-            music.musicUrl = await getPresignedUrl(music.musicKey)
-            music.coverImage = await getPresignedUrl(music.coverImageKey);
+        for (let music of musicsDocs) {
+            music.musicUrl = await getPresignedUrl(music.musicKey);
+            music.coverImageUrl = await getPresignedUrl(music.coverImageKey);
             musics.push(music);
         }
 
-        return res.status(201).json({musics})
-    }
-    catch(err){
+        return res.status(200).json({ musics });
+    } catch (err) {
         console.log(err);
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+export async function createPlaylist(req, res) {
+    const { title, musics } = req.body;
+
+    try {
+        const playlist = await playlistModel.create({
+            artist: req.user.fullname.firstName + " " + req.user.fullname.lastName,
+            artistId: req.user.id,
+            title,
+            userId: req.user.id,
+            musics
+        })
+
+        return res.status(201).json({ message: 'Playlist created successfully', playlist });
+
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+
+export async function getPlaylists(req, res) {
+    try {
+        const playlists = await playlistModel.find({ artistId: req.user.id })
+        return res.status(200).json({ playlists });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ message: 'Internal server error' });
     }
 }

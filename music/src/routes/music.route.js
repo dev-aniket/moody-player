@@ -9,13 +9,20 @@ const upload = multer({
     storage: multer.memoryStorage()
 });
 
-// POST /api/music/upload 
-router.post('/upload', authMiddleware.artistMiddleware, upload.fields([
-    {name:"music", maxCount:1},
-    {name:"coverImage", maxCount:1},
+/* POST /api/music/upload */
+router.post('/upload', authMiddleware.authArtistMiddleware, upload.fields([
+    { name: 'music', maxCount: 1 },
+    { name: 'coverImage', maxCount: 1 }
 ]), musicController.uploadMusic)
 
+//  GET /api/music/artist-musics 
+router.get('/artist-musics', authMiddleware.authArtistMiddleware, musicController.getArtistMusics)
 
-router.get('/artist-musics', authMiddleware.artistMiddleware, musicController.getArtistMusic)
+// POST /api/music/playlist
+router.post('/playlist', authMiddleware.authArtistMiddleware, musicController.createPlaylist)
+
+//GET /api/music/playlists
+router.get('/playlist', authMiddleware.authUserMiddleware, musicController.getPlaylists)
+
 
 export default router;

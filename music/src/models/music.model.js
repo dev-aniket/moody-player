@@ -1,28 +1,29 @@
 import mongoose from 'mongoose';
 
+
 const musicSchema = new mongoose.Schema({
-    title:{
-        type:String,
-        required:true
+    title: {
+        type: String,
+        required: true
     },
-    artist:{
-        type:String,
-        required:true
+    artist: {
+        type: String,
+        required: true
     },
-    artistId:{
+    artistId: {
         type: mongoose.Schema.Types.ObjectId,
     },
-    musicKey:{
-        type:String,
-        required:true
+    musicKey: {
+        type: String,
+        required: true
     },
-    coverImageKey:{
-        type:String,
-        required:true
+    coverImageKey: {
+        type: String,
+        required: true
     },
-}, {timestamps: true});
+}, { timestamps: true })
 
 
-const musicModel = mongoose.model("music", musicSchema);
+const musicModel = mongoose.model('music', musicSchema);
 
-export default musicModel; 
+export default musicModel;
