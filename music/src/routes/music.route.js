@@ -18,13 +18,17 @@ router.post('/upload', authMiddleware.authArtistMiddleware, upload.fields([
 // GET /api/music 
 router.get('/', authMiddleware.authUserMiddleware, musicController.getAllMusic);
 
+
 router.get('/get-details/:id', authMiddleware.authArtistMiddleware, musicController.getMusicById)
 
 //  GET /api/music/artist-musics 
 router.get('/artist-musics', authMiddleware.authArtistMiddleware, musicController.getArtistMusics)
 
 // POST /api/music/playlist
-router.post('/playlist', authMiddleware.authArtistMiddleware, musicController.createPlaylist)
+router.post('/playlist', authMiddleware.authArtistMiddleware, musicController.createPlaylist);
+
+// GET /api/music/playlist/artist 
+router.get('/playlist/artist', authMiddleware.authUserMiddleware, musicController.getArtistPlaylist)
 
 //GET /api/music/playlists
 router.get('/playlists', authMiddleware.authUserMiddleware, musicController.getPlaylists)

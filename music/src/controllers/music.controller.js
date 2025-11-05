@@ -151,7 +151,7 @@ export async function getPlaylistById(req, res){
     }
 }
 
-export async function getArtistPlaylists(req, res) {
+export async function getArtistPlaylist(req, res) {
     try {
         const playlists = await playlistModel.find({ artistId: req.user.id })
         return res.status(200).json({ playlists });
