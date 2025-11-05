@@ -15,6 +15,11 @@ router.post('/upload', authMiddleware.authArtistMiddleware, upload.fields([
     { name: 'coverImage', maxCount: 1 }
 ]), musicController.uploadMusic)
 
+// GET /api/music 
+router.get('/', authMiddleware.authUserMiddleware, musicController.getAllMusic);
+
+router.get('/get-details/:id', authMiddleware.authArtistMiddleware, musicController.getMusicById)
+
 //  GET /api/music/artist-musics 
 router.get('/artist-musics', authMiddleware.authArtistMiddleware, musicController.getArtistMusics)
 
@@ -22,7 +27,10 @@ router.get('/artist-musics', authMiddleware.authArtistMiddleware, musicControlle
 router.post('/playlist', authMiddleware.authArtistMiddleware, musicController.createPlaylist)
 
 //GET /api/music/playlists
-router.get('/playlist', authMiddleware.authUserMiddleware, musicController.getPlaylists)
+router.get('/playlists', authMiddleware.authUserMiddleware, musicController.getPlaylists)
+
+//GET /api/music/playlist/:id
+router.get('/playlist/:id', authMiddleware.authUserMiddleware, musicController.getPlaylistById)
 
 
 export default router;
