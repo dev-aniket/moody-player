@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: black;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+  }
+}
+
+html {
+  @apply scroll-smooth; /* Enables smooth scrolling */
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background-color: #ffffff;
+}
+
+/* Sticky Card Offsets */
+#sticky-card-1 {
+  --index: 1;
+}
+
+#sticky-card-2 {
+  --index: 2;
+}
+
+#sticky-card-3 {
+  --index: 3;
+}
+
+#sticky-card-4 {
+  --index: 4;
+}
+
+.sticky-card {
+  /* padding-top: calc(var(--index) * 2.5rem); */
+  top: calc(var(--index) * 4rem);
+}
